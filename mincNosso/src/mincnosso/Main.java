@@ -5,18 +5,30 @@
  */
 package mincnosso;
 
+import java.io.IOException;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
 import parser.AST;
 import parser.Parser;
 import parser.Scanner;
 import vm.Compiler;
 import vm.Interpreter;
-import tela.FXMLController;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import java.awt.Graphics;
+import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  *
  * @author Aluno 07
  */
-public class Main {
+public class Main extends Application {
 // Uso: java -jar minc.jar [opções]
     // Onde opções pode incluir:
     //-c : compilar código OU
@@ -54,15 +66,13 @@ public class Main {
                         //expressão nova
                         System.out.println(Proc.posFixa(ast));
                         System.out.println(Proc.preFixa(ast));
-
                         break;
 
                     case "-d":
-
+                        launch(args);
                         break;
 
                     case "-m":
-                        CompilerMarie.compileMarie(ast);
 
                         break;
 
@@ -76,6 +86,31 @@ public class Main {
         } else {
             System.err.println("Número de opções inválido");
         }
+
+    }
+
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("AST:");
+        Group root = new Group();
+        Canvas canvas = new Canvas(500, 500);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        drawShapes(gc);
+        root.getChildren().add(canvas);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    
+//arvore exibida em um canvas
+    private void drawShapes(GraphicsContext gc) {
+        Font fontLarge = Font.font("Arial", FontWeight.BOLD, 12);
+        gc.setStroke(Color.BLACK);
+
+        Canvas linha = new Canvas();
+        Canvas texto = new Canvas();
+
+        linha.setHeight(3);
+        
 
     }
 
