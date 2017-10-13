@@ -36,7 +36,7 @@ public class Operator extends AST {
     }
 
     /**
-     * Retoorna o símbolo do operador
+     * Retorna o símbolo do operador
      * 
      * @return símbolo do operador
      */

@@ -12,8 +12,6 @@ import vm.Compiler;
 import vm.Interpreter;
 import tela.FXMLController;
 
- 
-
 /**
  *
  * @author Aluno 07
@@ -21,13 +19,12 @@ import tela.FXMLController;
 public class Main {
 // Uso: java -jar minc.jar [opções]
     // Onde opções pode incluir:
-    // -c compilar código OU
-    // -i interpretar código
+    //-c : compilar código OU
+    //-i : interpretar código
     //-e : prefixa e pós fixa
     //-d : grafico
-    //-m marie
+    //-m : marie
 
-    
     public static void main(String[] args) {
         // TODO code application logic here
 
@@ -46,7 +43,7 @@ public class Main {
                         // Executar compilador
                         Compiler.compile(ast);
                         break;
-                        
+
                     case "-i":
                         // Executar interpretador
                         int result = Interpreter.interpret(ast);
@@ -55,19 +52,15 @@ public class Main {
 
                     case "-e":
                         //expressão nova
-                        int result2 = Interpreter.interpret(ast);
-                        System.out.println(String.format("Resultado: %d", result2));
-                        
-                        
-                        
+                        System.out.println(Proc.posFixa(ast));
+                        System.out.println(Proc.preFixa(ast));
+
                         break;
 
                     case "-d":
-                        
 
                         break;
 
-                        
                     case "-m":
 
                         break;
