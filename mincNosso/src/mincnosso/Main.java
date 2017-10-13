@@ -62,11 +62,8 @@ public class Main {
                         break;
 
                     case "-m":
-                        if(args[1].equals("")){
-                            CompilerMarie.compileMarie(ast, "output");
-                        } else {
-                            CompilerMarie.compileMarie(ast,args[1]);
-                        }
+                        CompilerMarie.compileMarie(ast);
+
                         break;
 
                     default:
