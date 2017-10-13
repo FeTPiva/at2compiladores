@@ -10,13 +10,27 @@ import parser.Parser;
 import parser.Scanner;
 import vm.Compiler;
 import vm.Interpreter;
-import tela.FXMLController;
+import java.io.IOException;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import java.awt.Graphics;
+import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
+ *12.02643-3 Fernanda T. Piva
+ *12.01595-4 Yuri Bunduki
+ *14.01293-6 Vinicius Lago Fernandes
  *
- * @author Aluno 07
  */
-public class Main {
+public class Main extends Application {
 // Uso: java -jar minc.jar [opções]
     // Onde opções pode incluir:
     //-c : compilar código OU
@@ -31,7 +45,7 @@ public class Main {
         // Verificar as opções da linha de comando
         // e então decidir se a expressão será interpretada
         // ou compilada
-        if (args.length == 0) {
+        if (args.length == 1) {
             // Relizar a análise sintática e geração da AST a partir
             // de System.in        exp += ast.toString();
             Parser parser = new Parser(Scanner.getScanner(System.in));
@@ -58,7 +72,7 @@ public class Main {
                         break;
 
                     case "-d":
-
+                        launch(args);
                         break;
 
                     case "-m":
@@ -76,6 +90,28 @@ public class Main {
         } else {
             System.err.println("Número de opções inválido");
         }
+
+    }
+
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("AST:");
+        Group root = new Group();
+        Canvas canvas = new Canvas(500, 500);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        drawShapes(gc);
+        root.getChildren().add(canvas);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    private void drawShapes(GraphicsContext gc) {
+        Font fontLarge = Font.font("Arial", FontWeight.BOLD, 12);
+        gc.setStroke(Color.BLACK);
+
+        Canvas linha = new Canvas();
+        Canvas texto = new Canvas();
+
+        linha.setHeight(3);
 
     }
 
