@@ -1,0 +1,43 @@
+load x			//sempre ter
+
+add y			//adição
+store x
+
+ciclo, Load num		//multiplicação
+add x
+store num
+load z
+subt one
+store z
+skipcond 400
+jump ciclo
+load num
+store x
+load x
+
+subt w			//subtração
+store x
+
+ciclos, Load nums	//divisão
+add one
+store nums
+load x
+subt a
+store x
+skipcond 400
+jump ciclos
+load nums
+store x
+load x
+
+output			//sempre ter
+halt
+
+x, dec 2
+y, dec 3
+z, dec 4
+one, dec 1		//declarar sempre
+num, dec 0		//declarar para cada multiplicação
+w, dec 2
+a, dec 2
+nums, dec 0		//declarar para cada divisão
