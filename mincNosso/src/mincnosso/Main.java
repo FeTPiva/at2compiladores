@@ -33,7 +33,7 @@ public class Main {
         // ou compilada
         if (args.length == 0) {
             // Relizar a análise sintática e geração da AST a partir
-            // de System.in
+            // de System.in        exp += ast.toString();
             Parser parser = new Parser(Scanner.getScanner(System.in));
             try {
                 AST ast = parser.parse();
