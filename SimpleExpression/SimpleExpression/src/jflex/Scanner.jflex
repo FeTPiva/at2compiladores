@@ -19,6 +19,8 @@ import java.util.Hashtable;
         reservedWords.put("SIN", sym.SIN);
         reservedWords.put("COS", sym.COS);
         reservedWords.put("EXP", sym.EXP);
+        reservedWords.put("EXPO", sym.EXPO);
+
     }
 
     //type é a classe do token 

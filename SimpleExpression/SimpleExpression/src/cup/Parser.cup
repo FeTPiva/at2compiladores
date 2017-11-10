@@ -11,10 +11,10 @@ action code
 
 //definição dos terminais
 /* Terminals (tokens returned by the scanner) */
+terminal Double    NUMBER;
 terminal           SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, ATTRIB;
 terminal           UMINUS, LPAREN, RPAREN;
-terminal Double    NUMBER;
-terminal           SIN, COS, EXP;
+terminal           SIN, COS, EXP, EXPO;
 terminal String    ID;
 
 /*definição dos Non-terminals */
@@ -56,6 +56,9 @@ expr ::= expr:e1 PLUS expr:e2 {: RESULT = new Double(e1.doubleValue() + e2.doubl
                     System.out.println(e.getMessage());
                     }:} 
     | COS LPAREN expr:e RPAREN {: RESULT =  Math.cos(e); :}
+    | SIN LPAREN expr:e RPAREN {: RESULT =  Math.sin(e); :} 
+    | EXPO LPAREN expr:e, expr:e2 RPAREN {: RESULT =  Math.pow(e.doubleValue(), e2doubleValue()); :}
+    | EXP LPAREN expr:e RPAREN {: RESULT =   :} //exp e
     ;
 
 
