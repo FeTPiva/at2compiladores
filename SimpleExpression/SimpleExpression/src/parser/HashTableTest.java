@@ -40,10 +40,10 @@ public class HashTableTest {
         reserved.add("sin");
         reserved.add("cos");
         reserved.add("exp");
-        
-        
+             
                 }
-       
+      
+
 }
 
 
@@ -57,7 +57,6 @@ class Parserr{
         { reserved.put("sin",sym.SIN);
         reserved.put("cos", sym.COS);
         reserved.put("exp", sym.EXP);
-        
         
         
                         }

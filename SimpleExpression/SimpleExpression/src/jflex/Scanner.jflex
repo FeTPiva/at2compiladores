@@ -2,7 +2,7 @@
 package parser;
 // importar classes do cup - classe symbol
 import java_cup.runtime.* ;
-
+import java.util.Hashtable;
 %%
 %class Scanner
 %cup /*criar arquivo de scanner preparado pra ser chamado pelo cup*/
@@ -13,14 +13,22 @@ import java_cup.runtime.* ;
 //para retornar o simbolo:
 
 %{
+    private Hashtable<String, Integer> reservedWords = new Hashtable<>();
+
+    {
+        reservedWords.put("SIN", sym.SIN);
+        reservedWords.put("COS", sym.COS);
+        reservedWords.put("EXP", sym.EXP);
+    }
+
     //type é a classe do token 
     //yyline e yycolumn são palavras reservadas do jflex para armazenar a linha e a coluna de um token encontrado na entrada
     //(precisa usar %line e %column pra dar certo)
 
-    private Symbol symbol(double type){
+    private Symbol symbol(Integer type){
     return new Symbol(type, yyline, yycolumn);
 }
-    private Symbol symbol(double type, Object value){
+    private Symbol symbol(Integer type, Object value){
     return new Symbol(type, yyline, yycolumn, value);
 }
 
@@ -28,7 +36,7 @@ import java_cup.runtime.* ;
 
 ws = [\ \t\f\r\n] /*white space*/
 number = [0-9]+|[0-9]*\.[0-9]+([eE][-+]?[0-9]+)? 
-id = {yycolumn}({yyclomun}|{value})*
+id = [A-Za-z][A-Za-z0-9]*
 
 
 %%
@@ -45,7 +53,13 @@ id = {yycolumn}({yyclomun}|{value})*
 {number}    { return symbol(sym.NUMBER, new Double(yytext())); }
 {ws}        {/*Ignore */}
 
-{id}        { return symbol(sym.ID, new String(yytext())); }
+{id}        { 
+                if(reservedWords.containsKey(yytext())){
+                    return symbol(reservedWords.get(yytext()));
+                } else {
+                    return symbol(sym.ID, new String(yytext()));
+                }
+            }
 
 .           { return symbol(sym.ERROR, yytext()); }
 

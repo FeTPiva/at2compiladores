@@ -8,33 +8,41 @@ package parser;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int MINUS = 5;
-  public static final int DIVIDE = 7;
+  public static final int MINUS = 4;
+  public static final int ATTRIB = 8;
+  public static final int DIVIDE = 6;
   public static final int UMINUS = 9;
+  public static final int SIN = 13;
   public static final int NUMBER = 12;
-  public static final int MOD = 8;
-  public static final int SEMI = 3;
-  public static final int ERROR = 2;
+  public static final int MOD = 7;
+  public static final int SEMI = 2;
+  public static final int COS = 14;
   public static final int EOF = 0;
-  public static final int PLUS = 4;
+  public static final int PLUS = 3;
+  public static final int ID = 16;
   public static final int error = 1;
   public static final int RPAREN = 11;
-  public static final int TIMES = 6;
+  public static final int TIMES = 5;
+  public static final int EXP = 15;
   public static final int LPAREN = 10;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "ERROR",
   "SEMI",
   "PLUS",
   "MINUS",
   "TIMES",
   "DIVIDE",
   "MOD",
+  "ATTRIB",
   "UMINUS",
   "LPAREN",
   "RPAREN",
-  "NUMBER"
+  "NUMBER",
+  "SIN",
+  "COS",
+  "EXP",
+  "ID"
   };
 }
 

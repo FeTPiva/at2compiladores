@@ -2,38 +2,16 @@
 package parser;
 import java_cup.runtime.*;
 import java.util.Hashtable;
-
 //função do hastable
 action code
 {:
-private Hashtable<String, Double> environment = new Hashtable<>();
-public enum sym{SIN, COS, EXP};
-
-{ 
- if(!enviroment.containsKey(sym.)){
-           System.out.println("deu certo! ");
-    }else {
-            System.out.println("não é o q vc quer");
-           }
-}
-
-
- 
-   Hashtable <String, sym > reserved = new Hashtable<>();
-        
-        { 
-        reserved.put("sin",sym.SIN);
-        reserved.put("cos", sym.COS);
-        reserved.put("exp", sym.EXP);
-        }
-
+    private Hashtable<String, Double> environment = new Hashtable<>();
 :}
-
 
 
 //definição dos terminais
 /* Terminals (tokens returned by the scanner) */
-terminal           ERROR, SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, ATTRIB;
+terminal           SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, ATTRIB;
 terminal           UMINUS, LPAREN, RPAREN;
 terminal Double    NUMBER;
 terminal           SIN, COS, EXP;
@@ -59,7 +37,7 @@ expr_list ::= expr_list expr_part
     ;
 
 expr_part ::= expr:e {: System.out.println("Resultado: " + e); :} SEMI
-    |ID:id ATTRIB expr:e SEMI{:enviroment.put(id,e);:}
+    |ID:id ATTRIB expr:e SEMI{: environment.put(id,e); :}
     | error SEMI
     ;
 
@@ -73,11 +51,12 @@ expr ::= expr:e1 PLUS expr:e2 {: RESULT = new Double(e1.doubleValue() + e2.doubl
     | MINUS expr:e {: RESULT = new Double(0 - e.doubleValue()); :} %prec UMINUS
     | LPAREN expr:e RPAREN {: RESULT = e; :}
     | ID:id {: try{
-                RESULT = enviroment.get(id); 
+                RESULT = environment.get(id); 
                    } catch(Exception e){
                     System.out.println(e.getMessage());
                     }:} 
+    | COS LPAREN expr:e RPAREN {: RESULT =  Math.cos(e); :}
     ;
 
-//obs pro item mdo sen cos, criar outro hashtable pra palavras reservadas???? colocar inicialização 
+
 
