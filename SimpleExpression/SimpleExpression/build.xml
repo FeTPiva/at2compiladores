@@ -1,0 +1,54 @@
+<project name="SimpleExpression" default="dist" basedir=".">
+	<description>
+        Ant build file for a simple expression interpreter.
+    </description>
+	<!-- set global properties for this build -->
+	<property name="src" location="src" />
+	<property name="tools" location="tools" />
+	<property name="jflex" location="src/jflex" />
+	<property name="cup" location="src/cup" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+
+	<taskdef name="jflex" classname="jflex.anttask.JFlexTask" classpath="${tools}/jflex-1.6.1.jar" />
+
+	<taskdef name="cup" classname="java_cup.anttask.CUPTask" classpath="${tools}/java-cup-11b.jar" />
+
+	<target name="init">
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+	</target>
+	<target name="compile" depends="init" description="compile the source">
+		<!-- Run jflex from jflex dir -->
+		<jflex file="${jflex}/Scanner.jflex" destdir="${src}" />
+		<!-- Run cup from cup dir -->
+		<cup srcfile="${cup}/Parser.cup" destdir="${src}" parser="Parser" interface="true" locations="false" />
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}" destdir="${build}" classpath="${tools}/java-cup-11b.jar" />
+	</target>
+
+	<target name="dist" depends="compile" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}" />
+		<!-- Put everything in ${build} into the jar file -->
+		<jar jarfile="${dist}/cup_exp_parser.jar" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="parser.Main" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="clean" description="clean up">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+		<delete>
+			<fileset dir="${src}/parser">
+				<include name="Scanner.java" />
+				<include name="Parser.java" />
+				<include name="ParserCup.java" />
+				<include name="ParserSym.java" />
+				<include name="sym.java" />
+			</fileset>
+		</delete>
+	</target>
+</project>

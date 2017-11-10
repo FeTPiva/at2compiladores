@@ -1,0 +1,83 @@
+//especificação do cup
+package parser;
+import java_cup.runtime.*;
+import java.util.Hashtable;
+
+//função do hastable
+action code
+{:
+private Hashtable<String, Double> environment = new Hashtable<>();
+public enum sym{SIN, COS, EXP};
+
+{ 
+ if(!enviroment.containsKey(sym.)){
+           System.out.println("deu certo! ");
+    }else {
+            System.out.println("não é o q vc quer");
+           }
+}
+
+
+ 
+   Hashtable <String, sym > reserved = new Hashtable<>();
+        
+        { 
+        reserved.put("sin",sym.SIN);
+        reserved.put("cos", sym.COS);
+        reserved.put("exp", sym.EXP);
+        }
+
+:}
+
+
+
+//definição dos terminais
+/* Terminals (tokens returned by the scanner) */
+terminal           ERROR, SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, ATTRIB;
+terminal           UMINUS, LPAREN, RPAREN;
+terminal Double    NUMBER;
+terminal           SIN, COS, EXP;
+terminal String    ID;
+
+/*definição dos Non-terminals */
+non terminal            expr_list, expr_part;
+non terminal Double     expr;
+
+
+/* Precedencia e associatividade dos operadores */
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE, MOD;
+precedence right ATTRIB;
+precedence left UMINUS;
+
+
+
+/* The grammar */
+
+expr_list ::= expr_list expr_part 
+    | expr_part 
+    ;
+
+expr_part ::= expr:e {: System.out.println("Resultado: " + e); :} SEMI
+    |ID:id ATTRIB expr:e SEMI{:enviroment.put(id,e);:}
+    | error SEMI
+    ;
+
+
+expr ::= expr:e1 PLUS expr:e2 {: RESULT = new Double(e1.doubleValue() + e2.doubleValue()); :}
+    | expr:e1 MINUS expr:e2 {: RESULT = new Double(e1.doubleValue() - e2.doubleValue()); :}
+    | expr:e1 TIMES expr:e2 {: RESULT = new Double(e1.doubleValue() * e2.doubleValue()); :}
+    | expr:e1 DIVIDE expr:e2{: RESULT = new Double(e1.doubleValue() / e2.doubleValue()); :}
+    | expr:e1 MOD expr:e2 {: RESULT = new Double(e1.doubleValue() % e2.doubleValue()); :}
+    | NUMBER:n {: RESULT = n; :}
+    | MINUS expr:e {: RESULT = new Double(0 - e.doubleValue()); :} %prec UMINUS
+    | LPAREN expr:e RPAREN {: RESULT = e; :}
+    | ID:id {: try{
+                RESULT = enviroment.get(id); 
+                   } catch(Exception e){
+                    System.out.println(e.getMessage());
+                    }:} 
+    ;
+
+//obs pro item mdo sen cos, criar outro hashtable pra palavras reservadas???? colocar inicialização 
+
